@@ -1,18 +1,16 @@
+from collections import Counter
+
+
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        counts = {}
+        noteCounter = Counter(ransomNote)
+        magazineCounter = Counter(magazine)
 
-        for magChar in magazine:
-            if magChar not in counts:
-                counts[magChar] = 1
-            else:
-                counts[magChar] += 1
-
-        for noteChar in ransomNote:
-            if noteChar not in counts or counts[noteChar] <= 0:
+        for char in noteCounter:
+            if char not in magazineCounter:
                 return False
-
-            counts[noteChar] -= 1
+            if noteCounter[char] > magazineCounter[char]:
+                return False
 
         return True
 
